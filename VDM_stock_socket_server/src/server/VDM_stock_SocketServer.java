@@ -45,8 +45,7 @@ public class VDM_stock_SocketServer extends Thread {
             {   
             	
             	MongoAccess.connect();
-            	System.out.println("count: " + MongoAccess.count());
-            	
+
                 System.out.println( "Listening for a connection" );
 
                 // Call accept() to receive the next connection
