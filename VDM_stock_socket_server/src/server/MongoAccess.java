@@ -33,7 +33,7 @@ public class MongoAccess {
 //					                                 Settings.getAdresse(),
 //					                                 Settings.getPort(),
 //					                                 Settings.getBase())); 
-			MongoClientURI uri  = new MongoClientURI("mongodb://192.168.0.201/test_VDM_stock"); 
+			MongoClientURI uri  = new MongoClientURI("mongodb://192.168.0.201/VDM_stock"); 
 			MongoClient client = new MongoClient(uri);
 			db = client.getDB(uri.getDatabase());	
 			jongo = new Jongo(db);

@@ -33,6 +33,8 @@ class RequestHandler extends Thread{
             while( line != null && line.length() > 0 )
             {
             	
+            	System.out.println(line);
+            	
             	if (line.split("&").length == 3 && !line.split("&")[2].equals("")){
             		
             		ArrayList<String> retour_array = new ArrayList<>();
