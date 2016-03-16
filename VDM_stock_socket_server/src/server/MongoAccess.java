@@ -1,6 +1,7 @@
 package server;
 
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 import org.bson.types.ObjectId;
@@ -59,6 +60,15 @@ public class MongoAccess {
 		Find find = null;
 		collec = jongo.getCollection(table);
 		find = collec.find("{_id :  #}", id);
+
+		return find;
+	}
+    
+    public static Find requestIn(String table, ArrayList<String> tags) {	
+		
+		Find find = null;
+		collec = jongo.getCollection(table);
+		find = collec.find("{tags : {$in :  #}}", tags);
 
 		return find;
 	}
