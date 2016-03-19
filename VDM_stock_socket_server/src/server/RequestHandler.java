@@ -42,12 +42,53 @@ class RequestHandler extends Thread{
             	
             	switch (c){
             	
+                case "00" : if (line.split("&").length == 3 && !line.split("&")[2].equals("")){
+            		
+            		ArrayList<String> retour_array = new ArrayList<>();
+                    String retour;
+                    
+                    MongoCursor<Enregistrable> cursor = MongoAccess.requestPerfectMatch(line.split("&")[0], line.split("&")[1], line.split("&")[2], true).as(Enregistrable.class);
+
+                    
+                    while (cursor.hasNext()){
+                    	retour_array.add(cursor.next().getNom());
+                    }
+                    
+                    retour = retour_array.stream().sorted().collect(Collectors.joining("&"));
+                    
+                    System.out.println("retour : " + retour);
+                    
+                    out.println(retour);
+                    out.flush();
+            	}   
+            	
+                else{
+            		
+            		ArrayList<String> retour_array = new ArrayList<>();
+                    String retour;
+                    
+                    MongoCursor<Enregistrable> cursor = MongoAccess.request(line.split("&")[0]).as(Enregistrable.class);
+
+                    
+                    while (cursor.hasNext()){
+                    	retour_array.add(cursor.next().getNom());
+                    }
+                    
+                    retour = retour_array.stream().sorted().collect(Collectors.joining("&"));
+                    
+                    System.out.println("retour : " + retour);
+                    
+                    out.println(retour);
+                    out.flush();
+            	} 
+            	break;
+            	
             	case "0" : if (line.split("&").length == 3 && !line.split("&")[2].equals("")){
             		
             		ArrayList<String> retour_array = new ArrayList<>();
                     String retour;
                     
-                    MongoCursor<Enregistrable> cursor = MongoAccess.request(line.split("&")[0], line.split("&")[1], line.split("&")[2], true).as(Enregistrable.class);
+                    MongoCursor<Enregistrable> cursor = MongoAccess.requestAnyMatch(line.split("&")[0], line.split("&")[1], line.split("&")[2], true).as(Enregistrable.class);
 
                     
                     while (cursor.hasNext()){

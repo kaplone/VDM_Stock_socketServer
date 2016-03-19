@@ -153,7 +153,21 @@ public class MongoAccess {
 	}
 	
 	
-    public static Find request(String table, String field, String valeur, boolean regex) {	
+    public static Find requestAnyMatch(String table, String field, String valeur, boolean regex) {	
+		
+		Find all = null;
+		collec = jongo.getCollection(table);
+
+		String query = String.format("{%s : #}", field); 
+		//String reg = String.format("^%s", valeur);
+		String reg = String.format("%s", valeur);
+		
+		all = collec.find(query, Pattern.compile(reg, Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE));
+
+		return all;
+	}
+    
+    public static Find requestPerfectMatch(String table, String field, String valeur, boolean regex) {	
 		
 		Find all = null;
 		collec = jongo.getCollection(table);
