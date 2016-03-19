@@ -160,7 +160,7 @@ public class MongoAccess {
 
 		String query = String.format("{%s : #}", field); 
 		//String reg = String.format("^%s", valeur);
-		String reg = String.format("%s", valeur);
+		String reg = String.format("^%s$", valeur);
 		
 		all = collec.find(query, Pattern.compile(reg, Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE));
 
