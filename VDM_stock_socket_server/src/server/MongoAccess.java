@@ -2,6 +2,7 @@ package server;
 
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Pattern;
 
 import org.bson.types.ObjectId;
@@ -64,11 +65,14 @@ public class MongoAccess {
 		return find;
 	}
     
-    public static Find requestIn(String table, ArrayList<String> tags) {	
+    public static Find requestIn(String table, List<String> tags) {	
+    	
+    	System.out.println("tags : " + tags.toString());
+    	System.out.println("tags.size() : " + tags.size());
 		
 		Find find = null;
 		collec = jongo.getCollection(table);
-		find = collec.find("{tags : {$in :  #}}", tags);
+		find = collec.find("{wrong_tags : {$in :  #}}", tags);
 
 		return find;
 	}

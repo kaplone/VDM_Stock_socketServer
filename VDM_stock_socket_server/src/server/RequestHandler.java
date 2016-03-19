@@ -94,10 +94,12 @@ class RequestHandler extends Thread{
 
                     
                     while (cursor.hasNext()){
-                    	retour_array.add(cursor.next().getNom());
+                    	Destinataire d = cursor.next();
+                    	System.out.println("destinataire.getNom() : " + d.getNom());
+                    	retour_array.add(d.getNom());
                     }
                     
-                    retour = retour_array.stream().sorted().collect(Collectors.joining("&"));
+                    retour = retour_array.stream().collect(Collectors.joining("&"));
                     
                     System.out.println("retour : " + retour);
                     
