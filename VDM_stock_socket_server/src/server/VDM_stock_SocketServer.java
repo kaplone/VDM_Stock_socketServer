@@ -4,18 +4,26 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+/**
+ * Classe principale de l'application
+ */
 public class VDM_stock_SocketServer extends Thread {
-
 	
 	private ServerSocket serverSocket;
     private int port;
     private boolean running = false;
     
-    
+    /**
+     * Constructeur sans paramètre
+     *  (définition du numéro du port)
+     */
     public VDM_stock_SocketServer(){
     	port = 44800;
     }
 
+    /**
+     * Initialisation du socket coté serveur
+     */
     public void startServer()
     {
         try
@@ -29,6 +37,9 @@ public class VDM_stock_SocketServer extends Thread {
         }
     }
 
+    /**
+     * Arret du socket coté serveur
+     */
     public void stopServer()
     {
         running = false;
@@ -62,7 +73,6 @@ public class VDM_stock_SocketServer extends Thread {
             }
         }
     }
-    
 
 	public static void main(String[] args) {
 		
