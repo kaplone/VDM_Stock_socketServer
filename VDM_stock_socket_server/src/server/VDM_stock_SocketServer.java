@@ -3,6 +3,8 @@ package server;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * Classe principale de l'application
@@ -12,6 +14,8 @@ public class VDM_stock_SocketServer extends Thread {
 	private ServerSocket serverSocket;
     private int port;
     private boolean running = false;
+    
+    private ExecutorService executor = null;
     
     /**
      * Constructeur sans paramètre
@@ -57,10 +61,11 @@ public class VDM_stock_SocketServer extends Thread {
             	
             	MongoAccess.connect();
 
-                System.out.println( "Listening for a connection" );
+                System.out.println( "Listening for connexions" );
 
                 // Call accept() to receive the next connection
                 Socket socket = serverSocket.accept();
+                executor = Executors.newFixedThreadPool(10);
 
                 // Pass the socket to the RequestHandler thread for processing
                 RequestHandler requestHandler = new RequestHandler( socket );
@@ -70,6 +75,11 @@ public class VDM_stock_SocketServer extends Thread {
             catch (IOException e)
             {
                 e.printStackTrace();
+            }
+            finally {
+            	if (executor != null){
+            		executor.shutdown();
+            	}
             }
         }
     }

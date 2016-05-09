@@ -1,7 +1,9 @@
 package server;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -43,7 +45,7 @@ class RequestHandler extends Thread{
 
 			// Get input and output streams
 			BufferedReader in = new BufferedReader( new InputStreamReader( socket.getInputStream() ) );
-			PrintWriter out = new PrintWriter( socket.getOutputStream() );
+			BufferedWriter out = new BufferedWriter(new OutputStreamWriter( socket.getOutputStream() ) );
 
 			// Echo lines back to the client until the client closes the connection or we receive an empty line
 			String line = in.readLine();
@@ -75,7 +77,8 @@ class RequestHandler extends Thread{
 
 					System.out.println("retour : " + retour);
 
-					out.println(retour);
+					out.write(retour);
+					out.newLine();
 					out.flush();
 				}   
 
@@ -95,7 +98,8 @@ class RequestHandler extends Thread{
 
 					System.out.println("retour : " + retour);
 
-					out.println(retour);
+					out.write(retour);
+					out.newLine();
 					out.flush();
 				} 
 				break;
@@ -116,7 +120,8 @@ class RequestHandler extends Thread{
 
 					System.out.println("retour : " + retour);
 
-					out.println(retour);
+					out.write(retour);
+					out.newLine();
 					out.flush();
 				}   
 
@@ -136,7 +141,8 @@ class RequestHandler extends Thread{
 
 					System.out.println("retour : " + retour);
 
-					out.println(retour);
+					out.write(retour);
+					out.newLine();
 					out.flush();
 				} 
 				break;
@@ -161,7 +167,8 @@ class RequestHandler extends Thread{
 
 					System.out.println("retour : " + retour);
 
-					out.println(retour);
+					out.write(retour);
+					out.newLine();
 					out.flush();
 
 					break;
