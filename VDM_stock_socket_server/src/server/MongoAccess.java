@@ -352,5 +352,4 @@ public class MongoAccess {
 		return collec.count();	
 	}
 
-
 }

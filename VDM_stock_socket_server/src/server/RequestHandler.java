@@ -29,6 +29,9 @@ import org.jongo.MongoCursor;
 class RequestHandler extends Thread{
 
 	private Socket socket;
+	
+	private MongoCursor<Enregistrable> cursor_e;
+	private MongoCursor<Destinataire> cursor_d;
 
 	/**
 	 * Constructeur canonique
@@ -67,11 +70,11 @@ class RequestHandler extends Thread{
 					ArrayList<String> retour_array = new ArrayList<>();
 					String retour;
 
-					MongoCursor<Enregistrable> cursor = MongoAccess.requestPerfectMatch(line.split("&")[0], line.split("&")[1], line.split("&")[2], true).as(Enregistrable.class);
+					cursor_e = MongoAccess.requestPerfectMatch(line.split("&")[0], line.split("&")[1], line.split("&")[2], true).as(Enregistrable.class);
 
 
-					while (cursor.hasNext()){
-						retour_array.add(cursor.next().getNom());
+					while (cursor_e.hasNext()){
+						retour_array.add(cursor_e.next().getNom());
 					}
 
 					retour = retour_array.stream().sorted().collect(Collectors.joining("&"));
@@ -88,11 +91,11 @@ class RequestHandler extends Thread{
 					ArrayList<String> retour_array = new ArrayList<>();
 					String retour;
 
-					MongoCursor<Enregistrable> cursor = MongoAccess.request(line.split("&")[0]).as(Enregistrable.class);
+					cursor_e = MongoAccess.request(line.split("&")[0]).as(Enregistrable.class);
 
 
-					while (cursor.hasNext()){
-						retour_array.add(cursor.next().getNom());
+					while (cursor_e.hasNext()){
+						retour_array.add(cursor_e.next().getNom());
 					}
 
 					retour = retour_array.stream().sorted().collect(Collectors.joining("&"));
@@ -110,11 +113,11 @@ class RequestHandler extends Thread{
 					ArrayList<String> retour_array = new ArrayList<>();
 					String retour;
 
-					MongoCursor<Enregistrable> cursor = MongoAccess.requestAnyMatch(line.split("&")[0], line.split("&")[1], line.split("&")[2], true).as(Enregistrable.class);
+					cursor_e = MongoAccess.requestAnyMatch(line.split("&")[0], line.split("&")[1], line.split("&")[2], true).as(Enregistrable.class);
 
 
-					while (cursor.hasNext()){
-						retour_array.add(cursor.next().getNom());
+					while (cursor_e.hasNext()){
+						retour_array.add(cursor_e.next().getNom());
 					}
 
 					retour = retour_array.stream().sorted().collect(Collectors.joining("&"));
@@ -131,11 +134,11 @@ class RequestHandler extends Thread{
 					ArrayList<String> retour_array = new ArrayList<>();
 					String retour;
 
-					MongoCursor<Enregistrable> cursor = MongoAccess.request(line.split("&")[0]).as(Enregistrable.class);
+					cursor_e = MongoAccess.request(line.split("&")[0]).as(Enregistrable.class);
 
 
-					while (cursor.hasNext()){
-						retour_array.add(cursor.next().getNom());
+					while (cursor_e.hasNext()){
+						retour_array.add(cursor_e.next().getNom());
 					}
 
 					retour = retour_array.stream().sorted().collect(Collectors.joining("&"));
@@ -155,11 +158,11 @@ class RequestHandler extends Thread{
 
 					Materiel materiel = MongoAccess.request("materiel", "nom", line).as(Materiel.class);
 
-					MongoCursor<Destinataire> cursor = MongoAccess.requestIn("destinataire", materiel.getTags()).as(Destinataire.class);
+					cursor_d = MongoAccess.requestIn("destinataire", materiel.getTags()).as(Destinataire.class);
 
 
-					while (cursor.hasNext()){
-						Destinataire d = cursor.next();
+					while (cursor_d.hasNext()){
+						Destinataire d = cursor_d.next();
 						System.out.println("destinataire.getNom() : " + d.getNom());
 						retour_array.add(d.getNom());
 					}
@@ -198,6 +201,22 @@ class RequestHandler extends Thread{
 				try {
 					socket.close();
 				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			if (cursor_e != null){
+				try {
+					cursor_e.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			if (cursor_d != null){
+				try {
+					cursor_d.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
