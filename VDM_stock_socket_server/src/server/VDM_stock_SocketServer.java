@@ -1,5 +1,6 @@
 package server;
 
+import java.io.EOFException;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -72,8 +73,15 @@ public class VDM_stock_SocketServer extends Thread {
                 requestHandler.start();
                 
             }
+            catch (EOFException oef){
+            	System.out.println("exception dans VDM_stock_socketserver : EOFException");
+            	stopServer();
+            	startServer();
+            }
+            
             catch (IOException e)
             {
+            	System.out.println("exception dans VDM_stock_socketserver : IOException");
                 e.printStackTrace();
             }
             finally {

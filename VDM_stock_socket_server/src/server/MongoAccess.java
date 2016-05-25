@@ -16,6 +16,8 @@ import org.jongo.MongoCollection;
 import com.mongodb.DB;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
+import com.mongodb.MongoException;
+import com.mongodb.MongoTimeoutException;
 
 /**
  * Classe pour la gestion des échanges avec la base de données MongoDB.
@@ -51,6 +53,14 @@ public class MongoAccess {
 			
 			
 		}
+		catch (MongoTimeoutException mtoe){
+			System.out.println("exception dans Mongoaccess : imeoutException");
+		}
+		
+		catch (MongoException me){
+			System.out.println("exception dans Mongoacces : MongoException");
+		}
+		
 		catch (UnknownHostException UHE){
 					System.out.println("erreur " + UHE);
 		}

@@ -2,6 +2,7 @@ package server;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.EOFException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
@@ -190,6 +191,18 @@ class RequestHandler extends Thread{
 
 			System.out.println( "Connection closed" );
 		}
+		
+		catch (EOFException oef){
+        	System.out.println("exception dans requestHandler : EOFException");
+        	try {
+				this.socket.close();
+				this.cursor_e.close();
+				this.cursor_d.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+        }
+		
 		catch( Exception e )
 		{
 			e.printStackTrace();
