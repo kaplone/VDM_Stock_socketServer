@@ -201,7 +201,20 @@ class RequestHandler extends Thread{
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+        	oef.printStackTrace();
         }
+		
+		catch (NullPointerException npe){
+			System.out.println("exception dans requestHandler : NullPointerException");
+			try {
+				this.socket.close();
+				this.cursor_e.close();
+				this.cursor_d.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			npe.printStackTrace();
+		}
 		
 		catch( Exception e )
 		{
