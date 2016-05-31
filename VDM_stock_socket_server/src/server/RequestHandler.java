@@ -74,8 +74,10 @@ class RequestHandler extends Thread{
 					cursor_e = MongoAccess.requestPerfectMatch(line.split("&")[0], line.split("&")[1], line.split("&")[2], true).as(Enregistrable.class);
 
 
-					while (cursor_e.hasNext()){
-						retour_array.add(cursor_e.next().getNom());
+					if (cursor_e != null){
+						while (cursor_e.hasNext()){
+							retour_array.add(cursor_e.next().getNom());
+						}
 					}
 
 					retour = retour_array.stream().sorted().collect(Collectors.joining("&"));
@@ -95,8 +97,10 @@ class RequestHandler extends Thread{
 					cursor_e = MongoAccess.request(line.split("&")[0]).as(Enregistrable.class);
 
 
-					while (cursor_e.hasNext()){
-						retour_array.add(cursor_e.next().getNom());
+					if (cursor_e != null){
+						while (cursor_e.hasNext()){
+							retour_array.add(cursor_e.next().getNom());
+						}
 					}
 
 					retour = retour_array.stream().sorted().collect(Collectors.joining("&"));
@@ -115,12 +119,13 @@ class RequestHandler extends Thread{
 					String retour;
 
 					cursor_e = MongoAccess.requestAnyMatch(line.split("&")[0], line.split("&")[1], line.split("&")[2], true).as(Enregistrable.class);
-
-
-					while (cursor_e.hasNext()){
-						retour_array.add(cursor_e.next().getNom());
+                    
+					
+					if (cursor_e != null){
+						while (cursor_e.hasNext()){
+							retour_array.add(cursor_e.next().getNom());
+						}
 					}
-
 					retour = retour_array.stream().sorted().collect(Collectors.joining("&"));
 
 					System.out.println("retour : " + retour);
@@ -138,8 +143,10 @@ class RequestHandler extends Thread{
 					cursor_e = MongoAccess.request(line.split("&")[0]).as(Enregistrable.class);
 
 
-					while (cursor_e.hasNext()){
-						retour_array.add(cursor_e.next().getNom());
+					if (cursor_e != null){
+						while (cursor_e.hasNext()){
+							retour_array.add(cursor_e.next().getNom());
+						}
 					}
 
 					retour = retour_array.stream().sorted().collect(Collectors.joining("&"));
@@ -161,13 +168,14 @@ class RequestHandler extends Thread{
 
 					cursor_d = MongoAccess.requestIn("destinataire", materiel.getTags()).as(Destinataire.class);
 
-
-					while (cursor_d.hasNext()){
-						Destinataire d = cursor_d.next();
-						System.out.println("destinataire.getNom() : " + d.getNom());
-						retour_array.add(d.getNom());
-					}
-
+                    if (cursor_d != null){
+                    	while (cursor_d.hasNext()){
+    						Destinataire d = cursor_d.next();
+    						System.out.println("destinataire.getNom() : " + d.getNom());
+    						retour_array.add(d.getNom());
+    					}
+                    }
+				
 					retour = retour_array.stream().collect(Collectors.joining("&"));
 
 					System.out.println("retour : " + retour);
