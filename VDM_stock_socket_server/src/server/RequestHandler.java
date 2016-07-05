@@ -14,6 +14,8 @@ import java.util.stream.Collectors;
 
 import org.jongo.MongoCursor;
 
+import com.mongodb.MongoTimeoutException;
+
 /**
  * Ecouteur du socket coté serveur.
  * Accepte 3 formes de requètes :
@@ -206,7 +208,7 @@ class RequestHandler extends Thread{
 				this.socket.close();
 				this.cursor_e.close();
 				this.cursor_d.close();
-			} catch (IOException e) {
+			} catch (IOException | NullPointerException e) {
 				e.printStackTrace();
 			}
         	oef.printStackTrace();
@@ -218,10 +220,22 @@ class RequestHandler extends Thread{
 				this.socket.close();
 				this.cursor_e.close();
 				this.cursor_d.close();
-			} catch (IOException e) {
+			} catch (IOException | NullPointerException e) {
 				e.printStackTrace();
 			}
 			npe.printStackTrace();
+		}
+		
+		catch (MongoTimeoutException mte){
+			System.out.println("exception dans requestHandler : MongoTimeoutException");
+			try {
+				this.socket.close();
+				this.cursor_e.close();
+				this.cursor_d.close();
+			} catch (IOException | NullPointerException e) {
+				e.printStackTrace();
+			}
+			mte.printStackTrace();
 		}
 		
 		catch( Exception e )
